@@ -1,36 +1,71 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Medintegro Web (Next.js Rebuild)
 
-## Getting Started
+Corporate website rebuild from WordPress to **Next.js 14 (App Router)** with **TypeScript**, **Tailwind**, and **shadcn/ui**.  
+Content is stored locally as code (no CMS/DB) for fast delivery and easy maintenance.
 
-First, run the development server:
+## Tech stack
+- Next.js 14 (App Router)
+- TypeScript
+- Tailwind CSS
+- shadcn/ui
+- Deployment: Vercel
+- Repo: GitHub (managed via GitHub Desktop)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Goals (MVP)
+- Pages: Home, About, Equipment, Contact
+- Localized routing: `/en/*`, `/ua/*`
+- Content-as-code (no CMS, no database)
+- Clean structure, easy future CMS swap (later)
+
+## Folder structure (key parts)
+
+```
+src/
+  app/
+    page.tsx                      # redirects / -> /en
+    [locale]/(site)/
+      layout.tsx                  # Header/Footer wrapper per locale
+      page.tsx                    # Home
+      about/page.tsx              # About
+      equipment/page.tsx          # Equipment
+      contact/page.tsx            # Contact
+
+  components/
+    site/                         # Header/Footer/sections (no business text)
+    ui/                           # shadcn/ui components
+
+  content/
+    en/pages/*.ts                 # EN page content (source of truth)
+    ua/pages/*.ts                 # UA page content (source of truth)
+
+  lib/
+    content/
+      types.ts                    # typed content schemas
+      getPage.ts                  # getPage(locale, slug) content loader
+    i18n/
+      locales.ts                  # locales config (en/ua)
+
+  middleware.ts                   # locale gate: /about -> /en/about
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Where content lives (IMPORTANT)
+All business copy is stored in:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- `src/content/en/pages/*`
+- `src/content/ua/pages/*`
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Rules:
+- Do **not** hardcode long text in React components.
+- Pages must load content via `getPage(locale, slug)` from `src/lib/content/getPage.ts`.
 
-## Learn More
+## Run locally
+```bash
+npm install
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Build
+```bash
+npm run build
+npm start
+```
