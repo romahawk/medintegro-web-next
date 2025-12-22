@@ -1,6 +1,8 @@
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
-import { isLocale } from "@/lib/i18n/locales";
+import { isLocale, type Locale } from "@/lib/i18n/locales";
+import Header from "@/components/site/Header";
+import Footer from "@/components/site/Footer";
 
 export default async function LocaleLayout({
   children,
@@ -12,5 +14,13 @@ export default async function LocaleLayout({
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
 
-  return <>{children}</>;
+  const l = locale as Locale;
+
+  return (
+    <>
+      <Header locale={l} />
+      {children}
+      <Footer locale={l} />
+    </>
+  );
 }
