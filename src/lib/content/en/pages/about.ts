@@ -5,15 +5,33 @@ const about: SimplePageContent = {
   locale: "en",
   seo: {
     title: "About — Medintegro",
-    description: "Who we are and how we work.",
+    description:
+      "Our mission is to integrate state-of-the-art medical technologies and build digital medical ecosystems.",
   },
   header: {
-    title: "About",
-    subtitle: "We deliver MedTech projects with clarity and control.",
+    title: "About Medintegro",
+    subtitle: "We focus on delivering medical equipment integration projects.",
   },
   sections: [
-    { body: "We focus on predictable delivery, clear documentation, and practical integration." },
-    { title: "What we do", body: "Equipment supply, integration, training, and ongoing service." },
+    {
+      title: "Mission",
+      body: "Integrating state-of-the-art medical technologies and creating digital medical ecosystems.",
+    },
+    {
+      title: "How we work",
+      body:
+        "Together with the client we define the optimal solution for the project: needs assessment, equipment selection, planning and design, supply and installation, staff training, service and software configuration.",
+    },
+    {
+      title: "Values",
+      body:
+        "Care about people. Work professionally. Be effective — proven by successful use of solutions in leading clinics and healthcare systems.",
+    },
+    {
+      title: "Partners",
+      body:
+        "ISIS SAS / Surgimedia; SURGIRIS SAS; ADVANTECH; MEDICAPTURE; ERGOMOUNTS; FSN; TELEMIS; AG NEOVO.",
+    },
   ],
 };
 

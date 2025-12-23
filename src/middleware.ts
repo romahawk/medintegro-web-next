@@ -1,7 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 
 const LOCALES = ["en", "ua"] as const;
-const DEFAULT_LOCALE = "en";
+const DEFAULT_LOCALE = "ua";
 
 export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;

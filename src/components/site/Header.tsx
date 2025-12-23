@@ -8,10 +8,10 @@ import { locales, type Locale } from "@/lib/i18n/locales";
 import { navLabels, type NavKey } from "@/lib/i18n/nav";
 
 const NAV: Array<{ href: string; key: NavKey }> = [
+  { href: "/about", key: "about" },
+  { href: "/equipment", key: "equipment" },
   { href: "/services", key: "services" },
   { href: "/projects", key: "projects" },
-  { href: "/equipment", key: "equipment" },
-  { href: "/about", key: "about" },
   { href: "/contact", key: "contact" },
 ];
 

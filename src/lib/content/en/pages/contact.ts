@@ -5,15 +5,29 @@ const contact: SimplePageContent = {
   locale: "en",
   seo: {
     title: "Contact — Medintegro",
-    description: "Get in touch with our team.",
+    description: "Contact us for a consultation on solutions and services.",
   },
   header: {
     title: "Contact",
-    subtitle: "Send a message — we reply fast.",
+    subtitle: "Have questions or need a consultation? We’re happy to help.",
   },
   sections: [
-    { body: "Email: info@yourdomain.com" },
-    { body: "Phone: +XX XXX XXX XXX" },
+    {
+      title: "Address",
+      body: "Kyiv, Ukraine — Acad. Korolyova Ave 1, office 16",
+    },
+    {
+      title: "Contacts",
+      body: "Email: info@medintegro.com.ua • Phone: +38 067 214 214 4",
+    },
+    {
+      title: "Working hours",
+      body: "Mon–Fri: 9:00–18:00 • Sat/Sun: closed",
+    },
+    {
+      title: "Message us",
+      body: "Interested in solutions or have a general question? Email us — we’ll respond.",
+    },
   ],
 };
 

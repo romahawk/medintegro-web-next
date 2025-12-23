@@ -5,24 +5,30 @@ const projects: SimplePageContent = {
   locale: "en",
   seo: {
     title: "Projects — Medintegro",
-    description: "Selected projects and delivered solutions.",
+    description:
+      "Typical implementations: integrated OR, video infrastructure, pendants and digital solutions.",
   },
   header: {
     title: "Projects",
-    subtitle: "Representative implementations (MVP: static showcase).",
+    subtitle:
+      "MVP: representative implementation types. Detailed case studies available on request.",
   },
   sections: [
     {
-      title: "Integrated OR / ICU solutions",
-      body: "Turnkey delivery with installation and commissioning coordination.",
+      title: "Integrated OR",
+      body: "Integration of devices, video, data and control into a unified OR environment.",
     },
     {
-      title: "Hospital infrastructure upgrades",
-      body: "Planning, sourcing, and integration support across multiple vendors.",
+      title: "OR video infrastructure",
+      body: "Routing/display/recording of video signals with workflow-aligned integration.",
     },
     {
-      title: "Training & adoption",
-      body: "Enablement programs for clinical staff and technical teams.",
+      title: "ICU / procedure room setups",
+      body: "Pendants, monitors and configurations designed for real clinical usage.",
+    },
+    {
+      title: "Telemedicine & digital solutions",
+      body: "Selection and deployment of platforms/workstations for remote collaboration scenarios.",
     },
   ],
 };

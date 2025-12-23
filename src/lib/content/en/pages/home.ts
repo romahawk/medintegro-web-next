@@ -4,23 +4,34 @@ const home: HomeContent = {
   slug: "home",
   locale: "en",
   seo: {
-    title: "Medintegro — Modern MedTech Solutions",
-    description: "Corporate overview, equipment, and services.",
+    title: "Medintegro — Integration of modern medical technologies",
+    description:
+      "Integrated OR solutions, surgical equipment, medical gas infrastructure and digital ecosystems. Turnkey delivery: planning, supply, installation, training, service.",
   },
   hero: {
-    title: "Modern MedTech solutions",
-    subtitle: "Clean delivery, transparent process, long-term support.",
-    primaryCta: { label: "Explore equipment", href: "/equipment" },
+    title: "We integrate modern medical technologies and digital ecosystems",
+    subtitle:
+      "Clear scope, predictable delivery, and support after go-live.",
+    primaryCta: { label: "Services", href: "/services" },
     secondaryCta: { label: "Contact", href: "/contact" },
   },
   features: [
-    { title: "Turnkey projects", description: "From planning to commissioning." },
-    { title: "Reliable vendors", description: "Proven brands and integration partners." },
-    { title: "Long-term support", description: "Training, service, maintenance." },
+    {
+      title: "Turnkey integration projects",
+      description: "Planning → supply → installation → commissioning → training.",
+    },
+    {
+      title: "Best-fit solutions",
+      description: "We select equipment and architecture for your specific project.",
+    },
+    {
+      title: "Training & service",
+      description: "Equipment support and software configuration after deployment.",
+    },
   ],
   cta: {
-    title: "Need a quick consultation?",
-    description: "Tell us your scope and timeline.",
+    title: "Need a consultation?",
+    description: "Message or call — we’ll align scope and next steps.",
     button: { label: "Get in touch", href: "/contact" },
   },
 };
