@@ -5,14 +5,15 @@ import { usePathname } from "next/navigation";
 import Container from "./Container";
 import { Button } from "@/components/ui/button";
 import { locales, type Locale } from "@/lib/i18n/locales";
+import { navLabels, type NavKey } from "@/lib/i18n/nav";
 
-const NAV = [
-  { href: "/about", label: "About" },
-  { href: "/equipment", label: "Equipment" },
-  { href: "/services", label: "Services" },
-  { href: "/projects", label: "Projects" },
-  { href: "/contact", label: "Contact" },
-] as const;
+const NAV: Array<{ href: string; key: NavKey }> = [
+  { href: "/services", key: "services" },
+  { href: "/projects", key: "projects" },
+  { href: "/equipment", key: "equipment" },
+  { href: "/about", key: "about" },
+  { href: "/contact", key: "contact" },
+];
 
 function withLocale(locale: Locale, href: string) {
   if (href === "/") return `/${locale}`;
@@ -20,7 +21,10 @@ function withLocale(locale: Locale, href: string) {
 }
 
 function switchLocale(pathname: string, nextLocale: Locale) {
-  // pathname like "/en", "/en/about", "/ua/contact"
+  // pathname examples:
+  // /en
+  // /en/about
+  // /ua/services
   const parts = pathname.split("/").filter(Boolean);
   if (parts.length === 0) return `/${nextLocale}`;
   parts[0] = nextLocale;
@@ -34,22 +38,28 @@ export default function Header({ locale }: { locale: Locale }) {
     <header className="border-b">
       <Container>
         <div className="flex h-16 items-center justify-between">
-          <Link href={`/${locale}`} className="font-semibold tracking-tight">
+          {/* Logo */}
+          <Link
+            href={`/${locale}`}
+            className="font-semibold tracking-tight"
+          >
             Medintegro
           </Link>
 
+          {/* Desktop nav */}
           <nav className="hidden items-center gap-6 md:flex">
             {NAV.map((item) => (
               <Link
-                key={item.href}
+                key={item.key}
                 href={withLocale(locale, item.href)}
                 className="text-sm text-muted-foreground hover:text-foreground"
               >
-                {item.label}
+                {navLabels[locale][item.key]}
               </Link>
             ))}
           </nav>
 
+          {/* Locale switcher */}
           <div className="flex items-center gap-2">
             {locales.map((l) => (
               <Button
@@ -58,7 +68,9 @@ export default function Header({ locale }: { locale: Locale }) {
                 variant={l === locale ? "default" : "outline"}
                 size="sm"
               >
-                <Link href={switchLocale(pathname, l)}>{l.toUpperCase()}</Link>
+                <Link href={switchLocale(pathname, l)}>
+                  {l.toUpperCase()}
+                </Link>
               </Button>
             ))}
           </div>
