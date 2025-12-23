@@ -21,21 +21,18 @@ function withLocale(locale: Locale, href: string) {
 }
 
 function switchLocale(pathname: string, nextLocale: Locale) {
-  // pathname examples:
-  // /en
-  // /en/about
-  // /ua/services
   const parts = pathname.split("/").filter(Boolean);
   if (parts.length === 0) return `/${nextLocale}`;
   parts[0] = nextLocale;
   return `/${parts.join("/")}`;
 }
 
-export default function Header({ locale }: { locale: Locale }) {
+/** ✅ NAMED EXPORT */
+export function Header({ locale }: { locale: Locale }) {
   const pathname = usePathname() || `/${locale}`;
 
   return (
-    <header className="border-b">
+    <header className="border-b border-border/60 bg-background">
       <Container>
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
@@ -52,7 +49,7 @@ export default function Header({ locale }: { locale: Locale }) {
               <Link
                 key={item.key}
                 href={withLocale(locale, item.href)}
-                className="text-sm text-muted-foreground hover:text-foreground"
+                className="text-sm text-muted-foreground hover:text-foreground transition"
               >
                 {navLabels[locale][item.key]}
               </Link>

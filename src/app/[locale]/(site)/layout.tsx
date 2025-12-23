@@ -1,8 +1,8 @@
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 import { isLocale, type Locale } from "@/lib/i18n/locales";
-import Header from "@/components/site/Header";
-import Footer from "@/components/site/Footer";
+import { Header } from "@/components/site/Header";
+import { Footer } from "@/components/site/Footer";
 
 export default async function LocaleLayout({
   children,
