@@ -1,8 +1,8 @@
-import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
-import { isLocale, type Locale } from "@/lib/i18n/locales";
+
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
+import { isLocale, type Locale } from "@/lib/i18n/locales";
 
 export default async function LocaleLayout({
   children,
@@ -12,14 +12,14 @@ export default async function LocaleLayout({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  if (!isLocale(locale)) notFound();
 
-  const l = locale as Locale;
+  // Locale guard + safe fallback
+  const l: Locale = isLocale(locale) ? locale : "ua";
 
   return (
     <>
       <Header locale={l} />
-      {children}
+      <main>{children}</main>
       <Footer locale={l} />
     </>
   );

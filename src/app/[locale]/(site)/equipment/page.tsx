@@ -1,318 +1,187 @@
 import Link from "next/link";
 import { Section } from "@/components/site/Section";
-import { PageHeader } from "@/components/site/PageHeader";
 import { CtaBand } from "@/components/site/CtaBand";
+import { BrandHero } from "@/components/site/BrandHero";
+
 import { Card, CardContent } from "@/components/ui/card";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import {
-  Video,
-  Monitor,
-  Wind,
-  Activity,
-  Wrench,
-  ShieldCheck,
-  Layers,
-  Cable,
-} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+
+import { ArrowRight, ShieldCheck } from "lucide-react";
+
+import type { Locale } from "@/lib/i18n/locales";
+import { EQUIPMENT_CATEGORIES } from "@/lib/equipment/data";
+import { EquipmentCategoryCard } from "@/components/equipment/EquipmentCategoryCard";
 
 type Props = {
-  params: Promise<{ locale: "ua" | "en" }>;
+  params: Promise<{ locale: Locale }>;
 };
 
-type CategoryKey =
-  | "or"
-  | "integration"
-  | "monitoring"
-  | "icu"
-  | "gas"
-  | "lights"
-  | "service";
-
-type EquipmentCategory = {
-  key: CategoryKey;
-  icon: any;
-  title: { ua: string; en: string };
-  lead: { ua: string; en: string };
-  chips: { ua: string[]; en: string[] };
-  details: { ua: string[]; en: string[] };
-};
-
-const CATEGORIES: EquipmentCategory[] = [
-  {
-    key: "or",
-    icon: Video,
-    title: { ua: "Операційна", en: "Operating room" },
-    lead: {
-      ua: "Системи для відео, комунікацій та керування процесом в OR.",
-      en: "Systems for video, communication, and workflow control in OR.",
-    },
-    chips: {
-      ua: ["I-OR", "Відео маршрутизація", "Запис/стрім"],
-      en: ["I-OR", "Video routing", "Recording/streaming"],
-    },
-    details: {
-      ua: [
-        "Системи інтеграції в операційній (керування джерелами відео/аудіо).",
-        "Запис та архівація процедур, трансляція для навчання (за політиками клініки).",
-        "Сумісність з ендоскопією, мікроскопією, PTZ-камерами, PACS / DICOM воркфлоу (де потрібно).",
-      ],
-      en: [
-        "OR integration systems (control of video/audio sources).",
-        "Procedure recording/archiving, training streaming (per hospital policies).",
-        "Compatibility with endoscopy, microscopy, PTZ cameras, and PACS/DICOM workflows (where needed).",
-      ],
-    },
-  },
-  {
-    key: "integration",
-    icon: Layers,
-    title: { ua: "Інтеграції та ІТ-контур", en: "Integrations & IT contour" },
-    lead: {
-      ua: "Підключення медичних систем до цифрової інфраструктури лікарні.",
-      en: "Connecting medical systems to the hospital’s digital infrastructure.",
-    },
-    chips: {
-      ua: ["PACS", "EMR", "Мульти-джерела"],
-      en: ["PACS", "EMR", "Multi-source"],
-    },
-    details: {
-      ua: [
-        "Інтеграція між системами (дані, зображення, робочі місця).",
-        "Вимоги до мережі, безпеки, сегментації та надійності (з ІТ служби).",
-        "Документація: схеми, специфікації, протоколи тестування.",
-      ],
-      en: [
-        "Inter-system integrations (data, images, workstations).",
-        "Network/security/segmentation/reliability requirements with IT teams.",
-        "Documentation: diagrams, specs, test protocols.",
-      ],
-    },
-  },
-  {
-    key: "monitoring",
-    icon: Monitor,
-    title: { ua: "Медичні монітори та відео", en: "Medical monitors & video" },
-    lead: {
-      ua: "Хірургічні та діагностичні монітори, медичні дисплеї, сигнал.",
-      en: "Surgical & diagnostic monitors, medical displays, signal chain.",
-    },
-    chips: {
-      ua: ["OR монітори", "Діагностика", "Кабелі/сигнал"],
-      en: ["OR displays", "Diagnostics", "Cabling/signal"],
-    },
-    details: {
-      ua: [
-        "Підбір дисплеїв під задачі: яскравість, роздільна здатність, захист, стандарти.",
-        "Сигнальна інфраструктура: маршрутизація, кабелі, конвертери, точки підключення.",
-        "Узгодження з інтеграцією OR та іншими джерелами.",
-      ],
-      en: [
-        "Display selection: brightness, resolution, protection, standards.",
-        "Signal infrastructure: routing, cabling, converters, connection points.",
-        "Alignment with OR integration and other video sources.",
-      ],
-    },
-  },
-  {
-    key: "icu",
-    icon: Activity,
-    title: { ua: "ICU / критична інфраструктура", en: "ICU / critical infrastructure" },
-    lead: {
-      ua: "Рішення для палат інтенсивної терапії та критичних зон.",
-      en: "Solutions for intensive care and critical environments.",
-    },
-    chips: {
-      ua: ["Підвіси/консолі", "Робочі місця", "Потоки"],
-      en: ["Pendents/booms", "Workstations", "Flows"],
-    },
-    details: {
-      ua: [
-        "Підвісні системи, робочі місця, підготовка інфраструктури.",
-        "Узгодження з медичними газами та електроживленням.",
-        "Проєктування з урахуванням сервісу та доступності.",
-      ],
-      en: [
-        "Ceiling pendants, workstations, infrastructure preparation.",
-        "Alignment with medical gases and power.",
-        "Design for serviceability and accessibility.",
-      ],
-    },
-  },
-  {
-    key: "gas",
-    icon: Wind,
-    title: { ua: "Медичні гази та розподіл", en: "Medical gases & distribution" },
-    lead: {
-      ua: "Газові мережі, точки підключення, контроль та безпека.",
-      en: "Gas networks, outlets, control, and safety.",
-    },
-    chips: {
-      ua: ["Мережі", "Точки", "Безпека"],
-      en: ["Networks", "Outlets", "Safety"],
-    },
-    details: {
-      ua: [
-        "Концепція та конфігурація під потреби відділень.",
-        "Узгодження з інженерією будівлі та підрядниками.",
-        "Документація та контроль відповідності вимогам безпеки.",
-      ],
-      en: [
-        "Concept and configuration per department needs.",
-        "Coordination with building engineering and contractors.",
-        "Documentation and safety compliance control.",
-      ],
-    },
-  },
-  {
-    key: "lights",
-    icon: Cable,
-    title: { ua: "Оснащення OR: світло та аксесуари", en: "OR equipping: lights & accessories" },
-    lead: {
-      ua: "Хірургічне освітлення, підвіси, компоненти робочого середовища.",
-      en: "Surgical lighting, pendants, and OR environment components.",
-    },
-    chips: {
-      ua: ["Освітлення", "Підвіси", "Інфраструктура"],
-      en: ["Lighting", "Pendants", "Infrastructure"],
-    },
-    details: {
-      ua: [
-        "Підбір та інтеграція в архітектуру операційної.",
-        "Планування монтажу і сервісного доступу.",
-        "Сумісність з відео та інтеграційними системами (за потреби).",
-      ],
-      en: [
-        "Selection and fit into OR architecture.",
-        "Installation planning and service access.",
-        "Compatibility with video/integration systems where needed.",
-      ],
-    },
-  },
-  {
-    key: "service",
-    icon: Wrench,
-    title: { ua: "Сервіс і підтримка", en: "Service & support" },
-    lead: {
-      ua: "Запуск, налаштування, навчання і підтримка протягом життєвого циклу.",
-      en: "Go-live, configuration, training, and lifecycle support.",
-    },
-    chips: {
-      ua: ["Запуск", "Налаштування", "Підтримка"],
-      en: ["Go-live", "Configuration", "Support"],
-    },
-    details: {
-      ua: [
-        "План сервісу та регламентні роботи.",
-        "Налаштування ПЗ і базові протоколи перевірки.",
-        "Підтримка користувачів і документація.",
-      ],
-      en: [
-        "Service plan and preventive maintenance.",
-        "Software configuration and baseline verification protocols.",
-        "User support and documentation.",
-      ],
-    },
-  },
-];
-
-function Chip({ text }: { text: string }) {
-  return (
-    <span className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-background px-2.5 py-1 text-xs text-muted-foreground">
-      {text}
-    </span>
-  );
+function cn(...classes: Array<string | false | null | undefined>) {
+  return classes.filter(Boolean).join(" ");
 }
 
 export default async function EquipmentPage({ params }: Props) {
   const { locale } = await params;
   const isUA = locale === "ua";
 
+  const t = {
+    eyebrow: isUA ? "Обладнання" : "Equipment",
+    title: isUA ? "Категорії рішень та обладнання" : "Equipment & solution categories",
+    subtitle: isUA
+      ? "Оберіть напрям — відкриється окрема сторінка з лінійками та продуктами."
+      : "Pick a category — it opens a dedicated page with lines and products.",
+
+    primaryCta: isUA ? "Зв’язатися" : "Contact",
+    secondaryCta: isUA ? "Про нас" : "About",
+
+    proof: [
+      {
+        label: isUA ? "Навігація" : "Navigation",
+        title: isUA ? "Категорія → Лінійка → Продукти" : "Category → Line → Products",
+        text: isUA
+          ? "Каталоговий підхід: швидко орієнтує і масштабується."
+          : "Catalog approach: easy to scan and scale.",
+      },
+      {
+        label: isUA ? "Підбір" : "Selection",
+        title: isUA ? "Вимоги перед комплектацією" : "Requirements before BOM",
+        text: isUA
+          ? "Спочатку сценарії, інженерія, ІТ-контур — потім залізо."
+          : "Workflows, engineering, IT contour first — hardware second.",
+      },
+      {
+        label: isUA ? "Результат" : "Outcome",
+        title: isUA ? "Прогнозована поставка" : "Predictable delivery",
+        text: isUA
+          ? "Документація + критерії приймання = менше ризиків."
+          : "Documentation + acceptance criteria = lower risk.",
+      },
+    ],
+  };
+
+  const HeroActions = (
+    <div className="flex flex-col gap-3 sm:flex-row">
+      <Button asChild className="w-full sm:w-auto">
+        <Link href={`/${locale}/contact`}>
+          <span className="inline-flex items-center gap-2">
+            {t.primaryCta}
+            <ArrowRight className="h-4 w-4" />
+          </span>
+        </Link>
+      </Button>
+
+      <Button
+        asChild
+        variant="outline"
+        className="w-full sm:w-auto border-white/25 bg-white/10 text-white hover:bg-white/15"
+      >
+        <Link href={`/${locale}/about`}>{t.secondaryCta}</Link>
+      </Button>
+    </div>
+  );
+
+  const ProofStrip = (
+    <div className="grid gap-4 md:grid-cols-3">
+      {t.proof.map((p) => (
+        <div
+          key={p.title}
+          className={cn(
+            "group rounded-2xl border border-white/15 bg-white/10 p-5 backdrop-blur",
+            "transition hover:-translate-y-0.5 hover:bg-white/12 hover:shadow-lg hover:shadow-black/10",
+            "focus-within:ring-2 focus-within:ring-[rgb(var(--brand-sky-rgb))]/70"
+          )}
+        >
+          <div className="space-y-2">
+            <Badge className="w-fit bg-white/10 text-white border border-white/15">
+              {p.label}
+            </Badge>
+            <div className="text-sm font-semibold text-white">{p.title}</div>
+            <p className="text-sm text-white/80">{p.text}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+
   return (
     <>
+      {/* HERO (brand style) */}
       <Section spacing="hero">
-        <PageHeader
-          eyebrow={isUA ? "Обладнання" : "Equipment"}
-          title={isUA ? "Категорії рішень та обладнання" : "Equipment & solution categories"}
-          subtitle={
-            isUA
-              ? "Ми не робимо каталог. Ми групуємо рішення по задачах клініки: зрозуміло, структуровано, без зайвого."
-              : "We don’t run a catalog. We group solutions by hospital needs — clear, structured, and practical."
-          }
+        <BrandHero
+          eyebrow={t.eyebrow.toUpperCase()}
+          title={t.title}
+          subtitle={t.subtitle}
+          actions={HeroActions}
+          footer={ProofStrip}
         />
       </Section>
 
+      {/* CATEGORIES GRID */}
       <Section tone="muted">
-        <div className="grid gap-4 lg:grid-cols-2">
-          {CATEGORIES.map((c) => {
-            const Icon = c.icon;
-            return (
-              <Card key={c.key} className="border-border/60">
-                <CardContent className="p-6">
-                  <div className="space-y-3">
-                    <div className="flex items-start justify-between gap-4">
-                      <div className="space-y-1">
-                        <h3 className="text-base font-semibold">
-                          {isUA ? c.title.ua : c.title.en}
-                        </h3>
-                        <p className="text-sm leading-relaxed text-muted-foreground">
-                          {isUA ? c.lead.ua : c.lead.en}
-                        </p>
-                      </div>
-
-                      <div className="mt-1 inline-flex h-10 w-10 items-center justify-center rounded-xl border border-border/60 bg-background">
-                        <Icon className="h-5 w-5 text-muted-foreground" />
-                      </div>
-                    </div>
-
-                    <div className="flex flex-wrap gap-2">
-                      {(isUA ? c.chips.ua : c.chips.en).map((t) => (
-                        <Chip key={t} text={t} />
-                      ))}
-                    </div>
-
-                    <div className="pt-1">
-                      <Accordion type="single" collapsible>
-                        <AccordionItem value="details">
-                          <AccordionTrigger className="text-sm">
-                            {isUA ? "Що включає" : "What it includes"}
-                          </AccordionTrigger>
-                          <AccordionContent>
-                            <ul className="mt-2 space-y-2 text-sm text-muted-foreground">
-                              {(isUA ? c.details.ua : c.details.en).map((line) => (
-                                <li key={line}>• {line}</li>
-                              ))}
-                            </ul>
-                          </AccordionContent>
-                        </AccordionItem>
-                      </Accordion>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            );
-          })}
-        </div>
-
-        <div className="mt-10 rounded-2xl border border-border/60 bg-background p-6">
-          <div className="flex items-start gap-3">
-            <ShieldCheck className="mt-0.5 h-5 w-5 text-muted-foreground" />
-            <div className="space-y-1">
-              <div className="text-sm font-medium">{isUA ? "Важливо" : "Important"}</div>
-              <p className="text-sm leading-relaxed text-muted-foreground">
-                {isUA
-                  ? "Підбір конфігурації залежить від задач відділення, простору, інженерії та ІТ-інфраструктури. Ми починаємо з вимог — і тільки потім переходимо до комплектації."
-                  : "Configuration depends on department needs, space, engineering constraints, and IT infrastructure. We start with requirements — only then move to equipment lists."}
-              </p>
-            </div>
+        <div className="flex items-end justify-between gap-6">
+          <div className="space-y-1">
+            <h2 className="text-lg font-semibold tracking-tight">
+              {isUA ? "Оберіть категорію" : "Choose a category"}
+            </h2>
+            <p className="text-sm text-muted-foreground">
+              {isUA
+                ? "Кожна категорія відкривається як окрема сторінка з лінійками."
+                : "Each category opens as a dedicated page with product lines."}
+            </p>
           </div>
+
+          <div className="hidden md:block h-px w-40 bg-linear-to-r from-transparent via-[rgb(var(--brand-sky-rgb))]/35 to-transparent" />
         </div>
+
+        <div className="mt-6 grid gap-4 lg:grid-cols-2">
+          {/* Add subtle interactivity by wrapping cards */}
+          {EQUIPMENT_CATEGORIES.map((category) => (
+            <div
+              key={category.key}
+              className={cn(
+                "transition",
+                "hover:-translate-y-0.5 hover:shadow-lg hover:shadow-black/5"
+              )}
+            >
+              <EquipmentCategoryCard category={category} locale={locale} />
+            </div>
+          ))}
+        </div>
+
+        {/* IMPORTANT NOTE (styled card) */}
+        <Card className="mt-10 border-border/60 bg-background">
+          <CardContent className="p-6">
+            <div className="flex items-start gap-3">
+              <div className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-border/60 bg-[rgb(var(--brand-sky-rgb))]/8">
+                <ShieldCheck className="h-5 w-5 text-[rgb(var(--brand-deep-rgb))] opacity-80" />
+              </div>
+
+              <div className="space-y-1">
+                <div className="text-sm font-semibold">
+                  {isUA ? "Важливо" : "Important"}
+                </div>
+                <p className="text-sm leading-relaxed text-muted-foreground">
+                  {isUA
+                    ? "Підбір конфігурації залежить від задач відділення, простору, інженерії та ІТ-інфраструктури. Ми починаємо з вимог — і тільки потім переходимо до комплектації."
+                    : "Configuration depends on department needs, space, engineering constraints, and IT infrastructure. We start with requirements — only then move to equipment lists."}
+                </p>
+                <div className="pt-2">
+                  <Link
+                    href={`/${locale}/contact`}
+                    className="inline-flex items-center gap-2 text-sm font-medium text-[rgb(var(--brand-deep-rgb))] underline-offset-4 hover:underline"
+                  >
+                    {isUA ? "Обговорити вимоги" : "Discuss requirements"}
+                    <ArrowRight className="h-4 w-4" />
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
       </Section>
 
+      {/* CTA */}
       <Section spacing="dense">
         <CtaBand
           title={isUA ? "Потрібна комплектація під ваші задачі?" : "Need a configuration for your needs?"}

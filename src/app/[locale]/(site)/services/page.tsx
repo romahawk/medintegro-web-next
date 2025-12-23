@@ -1,13 +1,19 @@
+import Link from "next/link";
+
 import { Section } from "@/components/site/Section";
-import { PageHeader } from "@/components/site/PageHeader";
 import { CtaBand } from "@/components/site/CtaBand";
+import { BrandHero } from "@/components/site/BrandHero";
+
 import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+
 import {
   Layers,
   Stethoscope,
@@ -15,6 +21,9 @@ import {
   Network,
   Truck,
   Wrench,
+  ArrowRight,
+  Sparkles,
+  ShieldCheck,
 } from "lucide-react";
 
 type Props = {
@@ -28,6 +37,10 @@ type Service = {
   lead: { ua: string; en: string };
   details: { ua: string[]; en: string[] };
 };
+
+function cn(...classes: Array<string | false | null | undefined>) {
+  return classes.filter(Boolean).join(" ");
+}
 
 const services: Service[] = [
   {
@@ -176,54 +189,193 @@ export default async function ServicesPage({ params }: Props) {
   const { locale } = await params;
   const isUA = locale === "ua";
 
+  const t = {
+    eyebrow: isUA ? "Послуги" : "Services",
+    title: isUA ? "Що ми робимо" : "What we deliver",
+    subtitle: isUA
+      ? "Структуровані послуги для лікарень та партнерів: від консультацій і проєктування до інтеграцій, постачання, навчання та сервісу."
+      : "Structured services for hospitals and partners: from consulting and design to integrations, supply, training, and service.",
+  };
+
+  const HeroActions = (
+    <div className="flex flex-col gap-3 sm:flex-row">
+      <Button asChild className="w-full sm:w-auto">
+        <Link href={`/${locale}/contact`}>
+          <span className="inline-flex items-center gap-2">
+            {isUA ? "Зв’язатися" : "Contact"}
+            <ArrowRight className="h-4 w-4" />
+          </span>
+        </Link>
+      </Button>
+
+      <Button
+        asChild
+        variant="outline"
+        className="w-full sm:w-auto border-white/25 bg-white/10 text-white hover:bg-white/15"
+      >
+        <Link href={`/${locale}/equipment`}>
+          {isUA ? "Перейти до рішень" : "Explore solutions"}
+        </Link>
+      </Button>
+    </div>
+  );
+
+  const ProofStrip = (
+    <div className="grid gap-4 md:grid-cols-3">
+      {[
+        {
+          label: isUA ? "Формат" : "Format",
+          title: isUA ? "Від консультації до delivery" : "From consulting to delivery",
+          text: isUA
+            ? "Можемо підключитись на будь-якому етапі і взяти відповідальність за результат."
+            : "We can join at any stage and own the outcome.",
+          icon: Sparkles,
+        },
+        {
+          label: isUA ? "Якість" : "Quality",
+          title: isUA ? "Документація + приймання" : "Docs + acceptance",
+          text: isUA
+            ? "Фіксуємо вимоги і критерії — менше ризиків на впровадженні."
+            : "We align requirements and criteria — fewer delivery risks.",
+          icon: ShieldCheck,
+        },
+        {
+          label: isUA ? "Масштаб" : "Scale",
+          title: isUA ? "Модульний підхід" : "Modular approach",
+          text: isUA
+            ? "Починаємо з одного блоку і масштабуємо рішення під заклад."
+            : "Start with one module and scale to the facility.",
+          icon: Layers,
+        },
+      ].map((p) => {
+        const Icon = p.icon;
+        return (
+          <div
+            key={p.title}
+            className={cn(
+              "group rounded-2xl border border-white/15 bg-white/10 p-5 backdrop-blur",
+              "transition hover:-translate-y-0.5 hover:bg-white/12 hover:shadow-lg hover:shadow-black/10",
+              "focus-within:ring-2 focus-within:ring-[rgb(var(--brand-sky-rgb))]/70"
+            )}
+          >
+            <div className="flex items-start justify-between gap-4">
+              <div className="space-y-2">
+                <Badge className="w-fit bg-white/10 text-white border border-white/15">
+                  {p.label}
+                </Badge>
+                <div className="text-sm font-semibold text-white">{p.title}</div>
+              </div>
+
+              <div className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/15 bg-white/10 transition group-hover:border-white/25 group-hover:bg-white/15">
+                <Icon className="h-5 w-5 text-white/85" />
+              </div>
+            </div>
+
+            <p className="mt-3 text-sm text-white/80">{p.text}</p>
+          </div>
+        );
+      })}
+    </div>
+  );
+
   return (
     <>
+      {/* HERO (brand style) */}
       <Section spacing="hero">
-        <PageHeader
-          eyebrow={isUA ? "Послуги" : "Services"}
-          title={isUA ? "Наші послуги" : "What we deliver"}
-          subtitle={
-            isUA
-              ? "Структуровані послуги для лікарень та партнерів: від консультацій і проєктування до інтеграцій, постачання, навчання та сервісу."
-              : "Structured services for hospitals and partners: from consulting and design to integrations, supply, training, and service."
-          }
+        <BrandHero
+          eyebrow={t.eyebrow.toUpperCase()}
+          title={t.title}
+          subtitle={t.subtitle}
+          actions={HeroActions}
+          footer={ProofStrip}
         />
       </Section>
 
+      {/* SERVICES GRID */}
       <Section tone="muted">
-        <div className="grid gap-4 lg:grid-cols-2">
+        <div className="flex items-end justify-between gap-6">
+          <div className="space-y-1">
+            <h2 className="text-lg font-semibold tracking-tight">
+              {isUA ? "Послуги" : "Services"}
+            </h2>
+            <p className="text-sm text-muted-foreground">
+              {isUA
+                ? "Розкрийте деталі кожної послуги — що входить і як ми організовуємо процес."
+                : "Open details for each service — what’s included and how we deliver."}
+            </p>
+          </div>
+
+          <div className="hidden md:block h-px w-40 bg-linear-to-r from-transparent via-[rgb(var(--brand-sky-rgb))]/35 to-transparent" />
+        </div>
+
+        <div className="mt-6 grid gap-4 lg:grid-cols-2">
           {services.map((s) => {
             const Icon = s.icon;
             return (
-              <Card key={s.key} className="border-border/60">
+              <Card
+                key={s.key}
+                className={cn(
+                  "group border-border/60 bg-background",
+                  "transition hover:-translate-y-0.5 hover:shadow-lg hover:shadow-black/5",
+                  "hover:border-[rgb(var(--brand-sky-rgb))]/30"
+                )}
+              >
                 <CardContent className="p-6">
-                  <div className="space-y-3">
+                  <div className="space-y-4">
                     <div className="flex items-start justify-between gap-4">
                       <div className="space-y-2">
-                        <h3 className="text-base font-semibold">
-                          {isUA ? s.title.ua : s.title.en}
-                        </h3>
+                        <div className="flex flex-wrap items-center gap-2">
+                          <h3 className="text-base font-semibold">
+                            {isUA ? s.title.ua : s.title.en}
+                          </h3>
+                          <Badge
+                            variant="outline"
+                            className="border-[rgb(var(--brand-sky-rgb))]/25 bg-[rgb(var(--brand-sky-rgb))]/5 text-[rgb(var(--brand-deep-rgb))]"
+                          >
+                            {isUA ? "Сервіс" : "Service"}
+                          </Badge>
+                        </div>
+
                         <p className="text-sm leading-relaxed text-muted-foreground">
                           {isUA ? s.lead.ua : s.lead.en}
                         </p>
                       </div>
 
-                      <div className="mt-1 inline-flex h-10 w-10 items-center justify-center rounded-xl border border-border/60 bg-background">
-                        <Icon className="h-5 w-5 text-muted-foreground" />
+                      {/* icon pill with accent */}
+                      <div className="mt-1 inline-flex h-10 w-10 items-center justify-center rounded-xl border border-border/60 bg-[rgb(var(--brand-sky-rgb))]/6 transition group-hover:bg-[rgb(var(--brand-sky-rgb))]/10">
+                        <Icon className="h-5 w-5 text-[rgb(var(--brand-deep-rgb))] opacity-80" />
                       </div>
                     </div>
 
                     <Accordion type="single" collapsible>
-                      <AccordionItem value="details">
-                        <AccordionTrigger className="text-sm">
-                          {isUA ? "Деталі" : "Details"}
+                      <AccordionItem value="details" className="border-border/60">
+                        <AccordionTrigger className="text-sm hover:no-underline">
+                          <span className="inline-flex items-center gap-2">
+                            {isUA ? "Деталі" : "Details"}
+                            <span className="text-xs text-muted-foreground">
+                              {isUA ? "(розгорнути)" : "(expand)"}
+                            </span>
+                          </span>
                         </AccordionTrigger>
                         <AccordionContent>
                           <ul className="mt-2 space-y-2 text-sm text-muted-foreground">
                             {(isUA ? s.details.ua : s.details.en).map((line) => (
-                              <li key={line}>• {line}</li>
+                              <li key={line} className="flex gap-2">
+                                <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-[rgb(var(--brand-sky-rgb))]" />
+                                <span>{line}</span>
+                              </li>
                             ))}
                           </ul>
+
+                          <div className="mt-4">
+                            <Link
+                              href={`/${locale}/contact`}
+                              className="inline-flex items-center gap-2 text-sm font-medium text-[rgb(var(--brand-deep-rgb))] underline-offset-4 hover:underline"
+                            >
+                              {isUA ? "Запитати про цю послугу" : "Ask about this service"}
+                              <ArrowRight className="h-4 w-4" />
+                            </Link>
+                          </div>
                         </AccordionContent>
                       </AccordionItem>
                     </Accordion>
@@ -235,6 +387,7 @@ export default async function ServicesPage({ params }: Props) {
         </div>
       </Section>
 
+      {/* CTA */}
       <Section spacing="dense">
         <CtaBand
           title={isUA ? "Обговоримо ваш проєкт" : "Let’s discuss your project"}
