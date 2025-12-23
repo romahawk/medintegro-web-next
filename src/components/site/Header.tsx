@@ -9,6 +9,8 @@ import { locales, type Locale } from "@/lib/i18n/locales";
 const NAV = [
   { href: "/about", label: "About" },
   { href: "/equipment", label: "Equipment" },
+  { href: "/services", label: "Services" },
+  { href: "/projects", label: "Projects" },
   { href: "/contact", label: "Contact" },
 ] as const;
 

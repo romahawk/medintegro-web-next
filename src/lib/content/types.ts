@@ -1,6 +1,13 @@
 import type { Locale } from "@/lib/i18n/locales";
 
-export type PageSlug = "home" | "about" | "equipment" | "contact";
+export type PageSlug =
+  | "home"
+  | "about"
+  | "equipment"
+  | "services"
+  | "projects"
+  | "contact";
+
 
 export type Seo = {
   title: string;
