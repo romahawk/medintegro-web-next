@@ -1,5 +1,19 @@
-import type { ReactNode } from "react";
+import * as React from "react";
+import { cn } from "@/lib/utils";
 
-export default function Container({ children }: { children: ReactNode }) {
-  return <div className="mx-auto w-full max-w-6xl px-4">{children}</div>;
+type ContainerProps = React.HTMLAttributes<HTMLDivElement> & {
+  size?: "default" | "wide";
+};
+
+export function Container({ className, size = "default", ...props }: ContainerProps) {
+  return (
+    <div
+      className={cn(
+        "mx-auto w-full px-4 sm:px-6 lg:px-8",
+        size === "default" ? "max-w-6xl" : "max-w-7xl",
+        className
+      )}
+      {...props}
+    />
+  );
 }

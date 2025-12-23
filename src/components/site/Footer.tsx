@@ -1,4 +1,4 @@
-import Container from "./Container";
+import { Container } from "./Container";
 import type { Locale } from "@/lib/i18n/locales";
 
 export default function Footer({ locale }: { locale: Locale }) {

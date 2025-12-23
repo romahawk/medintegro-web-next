@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import Container from "./Container";
+import { Container } from "./Container";
 import { Button } from "@/components/ui/button";
 import { locales, type Locale } from "@/lib/i18n/locales";
 import { navLabels, type NavKey } from "@/lib/i18n/nav";

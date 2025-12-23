@@ -1,4 +1,4 @@
-import Container from "@/components/site/Container";
+import { Container } from "./Container";
 import type { SimplePageContent } from "@/lib/content/types";
 
 export default function SimplePage({ page }: { page: SimplePageContent }) {
