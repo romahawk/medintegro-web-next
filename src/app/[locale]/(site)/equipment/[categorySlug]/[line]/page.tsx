@@ -51,8 +51,8 @@ export default async function EquipmentLinePage({ params }: Props) {
           title={lineTitle}
           subtitle={
             locale === "ua"
-              ? "Огляд продуктів для MVP. Фінальна конфігурація залежить від вимог та ІТ/інженерного контуру."
-              : "MVP product overview. Final configuration depends on requirements and IT/engineering constraints."
+              ? "Огляд продуктів. Фінальна конфігурація залежить від вимог та ІТ/інженерного контуру."
+              : "Product overview. Final configuration depends on requirements and IT/engineering constraints."
           }
         />
 
@@ -74,7 +74,6 @@ export default async function EquipmentLinePage({ params }: Props) {
       </Section>
 
       <Section>
-        {/* Passing a single-line product list means the block will render only that line group. */}
         <EquipmentProductsBlock products={products} locale={locale} />
       </Section>
     </>

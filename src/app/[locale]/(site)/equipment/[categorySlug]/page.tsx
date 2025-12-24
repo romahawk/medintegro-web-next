@@ -66,11 +66,6 @@ export default async function EquipmentCategoryPage({ params }: Props) {
               <h2 className="text-base font-semibold">
                 {locale === "ua" ? "Оберіть напрям" : "Choose a track"}
               </h2>
-              <p className="text-sm text-muted-foreground">
-                {locale === "ua"
-                  ? "Оберіть лінійку — відкриється список продуктів. Без фейкових акордеонів: тільки явна навігація."
-                  : "Pick a line — it opens a product list. No fake UI: explicit navigation only."}
-              </p>
 
               <div className="grid gap-4 md:grid-cols-2">
                 <Link
@@ -115,7 +110,7 @@ export default async function EquipmentCategoryPage({ params }: Props) {
                   </div>
                   <p className="mt-2 text-sm text-muted-foreground">
                     {locale === "ua"
-                      ? "IP-архітектура, маршрутизація та масштабування на кілька операційних."
+                      ? "IP-архітектура, маршрутизація та масштабування на кілька OR."
                       : "IP architecture, routing, and scaling across multiple ORs."}
                   </p>
                   <div className="mt-4 text-sm font-medium text-primary">

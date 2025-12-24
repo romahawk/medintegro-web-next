@@ -15,8 +15,18 @@ const OR_PRODUCTS: EquipmentProduct[] = [
       en: "Large-format 4K solution for displaying OR video/data, designed for in-wall integration.",
     },
     highlights: {
-      ua: ["4K відображення в реальному часі", "Підключення кількох джерел", "Організація PIP/PAP (залежить від конфігурації)", "Фокус на гігієні та ергономіці"],
-      en: ["Real-time 4K display", "Multiple source connectivity", "PIP/PAP composition (config-dependent)", "Hygiene & ergonomics oriented"],
+      ua: [
+        "4K відображення в реальному часі",
+        "Підключення кількох джерел",
+        "Організація PIP/PAP (залежить від конфігурації)",
+        "Фокус на гігієні та ергономіці",
+      ],
+      en: [
+        "Real-time 4K display",
+        "Multiple source connectivity",
+        "PIP/PAP composition (config-dependent)",
+        "Hygiene & ergonomics oriented",
+      ],
     },
     url: "https://www.surgimedia.com/products/product-xxl-4k",
   },
@@ -31,8 +41,18 @@ const OR_PRODUCTS: EquipmentProduct[] = [
       en: "Compact HD/4K video recorder/manager for ORs, deployable without structural room modifications.",
     },
     highlights: {
-      ua: ["Швидке впровадження", "Гнучке розширення опціями", "Запис/архівація (за конфігурацією)", "Підходить для оновлення існуючих OR"],
-      en: ["Fast deployment", "Option-based expandability", "Recording/archiving (config-dependent)", "Good fit for upgrading existing ORs"],
+      ua: [
+        "Швидке впровадження",
+        "Гнучке розширення опціями",
+        "Запис/архівація (за конфігурацією)",
+        "Підходить для оновлення існуючих OR",
+      ],
+      en: [
+        "Fast deployment",
+        "Option-based expandability",
+        "Recording/archiving (config-dependent)",
+        "Good fit for upgrading existing ORs",
+      ],
     },
     url: "https://www.surgimedia.com/products/compact",
   },
@@ -49,8 +69,18 @@ const OR_PRODUCTS: EquipmentProduct[] = [
       en: "Rack-based 4K-IP multimedia platform for distributing, displaying, transmitting, and storing surgical video and patient data.",
     },
     highlights: {
-      ua: ["IP-архітектура (encoders/decoders)", "Маршрутизація та диспетчеризація сигналів", "Запис/стрімінг (опційно)", "Підходить для масштабування під кілька OR"],
-      en: ["IP architecture (encoders/decoders)", "Signal routing & dispatch", "Recording/streaming (optional)", "Scales across multiple ORs"],
+      ua: [
+        "IP-архітектура (encoders/decoders)",
+        "Маршрутизація та диспетчеризація сигналів",
+        "Запис/стрімінг (опційно)",
+        "Підходить для масштабування під кілька OR",
+      ],
+      en: [
+        "IP architecture (encoders/decoders)",
+        "Signal routing & dispatch",
+        "Recording/streaming (optional)",
+        "Scales across multiple ORs",
+      ],
     },
     url: "https://www.surgimedia.com/products/distriview-4k-ip",
   },
@@ -65,8 +95,18 @@ const OR_PRODUCTS: EquipmentProduct[] = [
       en: "4K-IP solution for hybrid ORs: centralizes video and data (incl. DICOM) and streamlines patient-file workflows.",
     },
     highlights: {
-      ua: ["Композиція кількох джерел на 4K екрані", "DICOM/дані пацієнта (за інтеграцією)", "Зручні сенсорні панелі керування", "Опції колаборації/обміну (за політиками закладу)"],
-      en: ["Multi-source composition on 4K displays", "DICOM/patient data (integration-dependent)", "Touch-based control UX", "Collaboration/sharing options (policy-dependent)"],
+      ua: [
+        "Композиція кількох джерел на 4K екрані",
+        "DICOM/дані пацієнта (за інтеграцією)",
+        "Зручні сенсорні панелі керування",
+        "Опції колаборації/обміну (за політиками закладу)",
+      ],
+      en: [
+        "Multi-source composition on 4K displays",
+        "DICOM/patient data (integration-dependent)",
+        "Touch-based control UX",
+        "Collaboration/sharing options (policy-dependent)",
+      ],
     },
     url: "https://www.surgimedia.com/products/multiview-4k-ip",
   },
@@ -100,7 +140,7 @@ export const EQUIPMENT_CATEGORIES: EquipmentCategory[] = [
     products: OR_PRODUCTS,
   },
 
-  // Keep other categories as safe placeholders (no products yet).
+  // Safe placeholders (no products yet)
   {
     key: "integration",
     iconKey: "layers",
@@ -111,8 +151,16 @@ export const EQUIPMENT_CATEGORIES: EquipmentCategory[] = [
     },
     chips: { ua: ["PACS", "EMR", "Мульти-джерела"], en: ["PACS", "EMR", "Multi-source"] },
     includes: {
-      ua: ["Інтеграція між системами (дані, зображення, робочі місця).", "Вимоги до мережі/безпеки/сегментації.", "Документація: схеми, специфікації, протоколи тестування."],
-      en: ["Inter-system integrations (data, images, workstations).", "Network/security/segmentation requirements.", "Documentation: diagrams, specs, test protocols."],
+      ua: [
+        "Інтеграція між системами (дані, зображення, робочі місця).",
+        "Вимоги до мережі/безпеки/сегментації.",
+        "Документація: схеми, специфікації, протоколи тестування.",
+      ],
+      en: [
+        "Inter-system integrations (data, images, workstations).",
+        "Network/security/segmentation requirements.",
+        "Documentation: diagrams, specs, test protocols.",
+      ],
     },
   },
   {

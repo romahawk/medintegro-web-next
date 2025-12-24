@@ -1,4 +1,6 @@
+// src/components/equipment/EquipmentCategoryCard.tsx
 import Link from "next/link";
+
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -10,15 +12,15 @@ import {
 
 import type { EquipmentCategory } from "@/lib/equipment/types";
 import type { Locale } from "@/lib/i18n/locales";
-import { getEquipmentIcon } from "@/lib/equipment/icons";
-import { CATEGORY_SLUG_BY_KEY } from "@/lib/equipment/routes";
+import { getIconByKey } from "@/lib/equipment/icons";
+import { getCategoryHref } from "@/lib/equipment/routes";
 
 type Props = {
   category: EquipmentCategory;
   locale: Locale;
 
   /**
-   * If true, renders inline products preview (not recommended on /equipment directory page).
+   * If true, renders inline products preview (optional).
    * Default: false
    */
   showProductsPreview?: boolean;
@@ -29,19 +31,19 @@ export function EquipmentCategoryCard({
   locale,
   showProductsPreview = false,
 }: Props) {
-  const Icon = getEquipmentIcon(category.iconKey);
+  const Icon = getIconByKey(category.iconKey);
+
   const chips = category.chips?.[locale] ?? [];
   const includes = category.includes?.[locale] ?? [];
   const products = category.products ?? [];
 
-  const slug = CATEGORY_SLUG_BY_KEY[category.key];
-  const href = `/${locale}/${slug}`;
+  const href = getCategoryHref(locale, category.key);
 
   return (
     <Card className="border-border/60">
       <CardContent className="p-6">
         <div className="space-y-4">
-          {/* Clickable header */}
+          {/* Clickable header (card itself is NOT a link because it may contain an accordion) */}
           <Link
             href={href}
             className="block rounded-xl focus:outline-none focus:ring-2 focus:ring-ring"
@@ -89,23 +91,27 @@ export function EquipmentCategoryCard({
             </Accordion>
           )}
 
-          {/* Products preview (OFF by default) */}
+          {/* Optional products preview (disabled by default) */}
           {showProductsPreview && products.length > 0 ? (
-            <div className="pt-1">
-              {/* If you ever want preview back, import & render block here.
-                  Keeping it out now avoids heavy directory page.
-               */}
-              {/* Lazy future: re-add EquipmentProductsBlock import and render */}
+            <div className="space-y-2">
+              <div className="text-sm font-medium">
+                {locale === "ua" ? "Приклади продуктів" : "Example products"}
+              </div>
+              <ul className="space-y-1 text-sm text-muted-foreground">
+                {products.slice(0, 3).map((p) => (
+                  <li key={p.key}>• {p.name}</li>
+                ))}
+              </ul>
             </div>
           ) : null}
 
-          {/* Explicit affordance to open category (better UX than relying only on title underline) */}
+          {/* Explicit CTA link */}
           <div className="pt-1">
             <Link
               href={href}
               className="text-sm font-medium text-primary underline-offset-4 hover:underline"
             >
-              {locale === "ua" ? "Відкрити →" : "Open →"}
+              {locale === "ua" ? "Відкрити категорію →" : "Open category →"}
             </Link>
           </div>
         </div>
