@@ -81,25 +81,19 @@ export default async function EquipmentPage({ params }: Props) {
     </div>
   );
 
-  const ProofStrip = (
+  // ✅ Neutral proof strip (works on light background, not “empty cards”)
+  const ProofStripNeutral = (
     <div className="grid gap-4 md:grid-cols-3">
       {t.proof.map((p) => (
-        <div
-          key={p.title}
-          className={cn(
-            "group rounded-2xl border border-white/15 bg-white/10 p-5 backdrop-blur",
-            "transition hover:-translate-y-0.5 hover:bg-white/12 hover:shadow-lg hover:shadow-black/10",
-            "focus-within:ring-2 focus-within:ring-[rgb(var(--brand-sky-rgb))]/70"
-          )}
-        >
-          <div className="space-y-2">
-            <Badge className="w-fit bg-white/10 text-white border border-white/15">
+        <Card key={p.title} className="border-border/60 bg-background">
+          <CardContent className="p-5 space-y-2">
+            <Badge variant="outline" className="w-fit">
               {p.label}
             </Badge>
-            <div className="text-sm font-semibold text-white">{p.title}</div>
-            <p className="text-sm text-white/80">{p.text}</p>
-          </div>
-        </div>
+            <div className="text-sm font-semibold">{p.title}</div>
+            <p className="text-sm text-muted-foreground">{p.text}</p>
+          </CardContent>
+        </Card>
       ))}
     </div>
   );
@@ -119,68 +113,72 @@ export default async function EquipmentPage({ params }: Props) {
 
       {/* CATEGORIES GRID */}
       <Section tone="muted">
-        <div className="flex items-end justify-between gap-6">
-          <div className="space-y-1">
-            <h2 className="text-lg font-semibold tracking-tight">
-              {isUA ? "Оберіть категорію" : "Choose a category"}
-            </h2>
-            <p className="text-sm text-muted-foreground">
-              {isUA
-                ? "Кожна категорія відкривається як окрема сторінка з лінійками."
-                : "Each category opens as a dedicated page with product lines."}
-            </p>
+        {/* ✅ Pull categories up (above the fold) */}
+        <div className="-mt-10 md:-mt-14">
+          <div className="flex items-end justify-between gap-6">
+            <div className="space-y-1">
+              <h2 className="text-lg font-semibold tracking-tight">
+                {isUA ? "Оберіть категорію" : "Choose a category"}
+              </h2>
+              <p className="text-sm text-muted-foreground">
+                {isUA
+                  ? "Кожна категорія відкривається як окрема сторінка з лінійками."
+                  : "Each category opens as a dedicated page with product lines."}
+              </p>
+            </div>
+
+            <div className="hidden md:block h-px w-40 bg-linear-to-r from-transparent via-[rgb(var(--brand-sky-rgb))]/35 to-transparent" />
           </div>
 
-          <div className="hidden md:block h-px w-40 bg-linear-to-r from-transparent via-[rgb(var(--brand-sky-rgb))]/35 to-transparent" />
-        </div>
-
-        {/* Proof strip moved here so categories are above fold */}
-        <div className="mt-6">{ProofStrip}</div>
-
-        <div className="mt-6 grid gap-4 lg:grid-cols-2">
-          {EQUIPMENT_CATEGORIES.map((category) => (
-            <div
-              key={category.key}
-              className={cn(
-                "transition",
-                "hover:-translate-y-0.5 hover:shadow-lg hover:shadow-black/5"
-              )}
-            >
-              <EquipmentCategoryCard category={category} locale={locale} />
-            </div>
-          ))}
-        </div>
-
-        {/* IMPORTANT NOTE (styled card) */}
-        <Card className="mt-10 border-border/60 bg-background">
-          <CardContent className="p-6">
-            <div className="flex items-start gap-3">
-              <div className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-border/60 bg-[rgb(var(--brand-sky-rgb))]/8">
-                <ShieldCheck className="h-5 w-5 text-[rgb(var(--brand-deep-rgb))] opacity-80" />
+          {/* ✅ Categories FIRST (no proof blocks here) */}
+          <div className="mt-4 grid gap-4 lg:grid-cols-2">
+            {EQUIPMENT_CATEGORIES.map((category) => (
+              <div
+                key={category.key}
+                className={cn(
+                  "transition",
+                  "hover:-translate-y-0.5 hover:shadow-lg hover:shadow-black/5"
+                )}
+              >
+                <EquipmentCategoryCard category={category} locale={locale} />
               </div>
+            ))}
+          </div>
 
-              <div className="space-y-1">
-                <div className="text-sm font-semibold">
-                  {isUA ? "Важливо" : "Important"}
+          {/* IMPORTANT NOTE (styled card) */}
+          <Card className="mt-10 border-border/60 bg-background">
+            <CardContent className="p-6">
+              <div className="flex items-start gap-3">
+                <div className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-border/60 bg-[rgb(var(--brand-sky-rgb))]/8">
+                  <ShieldCheck className="h-5 w-5 text-[rgb(var(--brand-deep-rgb))] opacity-80" />
                 </div>
-                <p className="text-sm leading-relaxed text-muted-foreground">
-                  {isUA
-                    ? "Підбір конфігурації залежить від задач відділення, простору, інженерії та ІТ-інфраструктури. Ми починаємо з вимог — і тільки потім переходимо до комплектації."
-                    : "Configuration depends on department needs, space, engineering constraints, and IT infrastructure. We start with requirements — only then move to equipment lists."}
-                </p>
-                <div className="pt-2">
-                  <Link
-                    href={`/${locale}/contact`}
-                    className="inline-flex items-center gap-2 text-sm font-medium text-[rgb(var(--brand-deep-rgb))] underline-offset-4 hover:underline"
-                  >
-                    {isUA ? "Обговорити вимоги" : "Discuss requirements"}
-                    <ArrowRight className="h-4 w-4" />
-                  </Link>
+
+                <div className="space-y-1">
+                  <div className="text-sm font-semibold">
+                    {isUA ? "Важливо" : "Important"}
+                  </div>
+                  <p className="text-sm leading-relaxed text-muted-foreground">
+                    {isUA
+                      ? "Підбір конфігурації залежить від задач відділення, простору, інженерії та ІТ-інфраструктури. Ми починаємо з вимог — і тільки потім переходимо до комплектації."
+                      : "Configuration depends on department needs, space, engineering constraints, and IT infrastructure. We start with requirements — only then move to equipment lists."}
+                  </p>
+                  <div className="pt-2">
+                    <Link
+                      href={`/${locale}/contact`}
+                      className="inline-flex items-center gap-2 text-sm font-medium text-[rgb(var(--brand-deep-rgb))] underline-offset-4 hover:underline"
+                    >
+                      {isUA ? "Обговорити вимоги" : "Discuss requirements"}
+                      <ArrowRight className="h-4 w-4" />
+                    </Link>
+                  </div>
                 </div>
               </div>
-            </div>
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
+
+          {/* ✅ Proof AFTER categories (neutral style, no “empty containers”) */}
+          <div className="mt-10">{ProofStripNeutral}</div>
+        </div>
       </Section>
 
       {/* CTA */}
