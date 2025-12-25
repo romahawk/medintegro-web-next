@@ -106,14 +106,14 @@ export default async function EquipmentPage({ params }: Props) {
 
   return (
     <>
-      {/* HERO (brand style) */}
+      {/* HERO (compact) */}
       <Section spacing="hero">
         <BrandHero
+          variant="compact"
           eyebrow={t.eyebrow.toUpperCase()}
           title={t.title}
           subtitle={t.subtitle}
           actions={HeroActions}
-          footer={ProofStrip}
         />
       </Section>
 
@@ -134,8 +134,10 @@ export default async function EquipmentPage({ params }: Props) {
           <div className="hidden md:block h-px w-40 bg-linear-to-r from-transparent via-[rgb(var(--brand-sky-rgb))]/35 to-transparent" />
         </div>
 
+        {/* Proof strip moved here so categories are above fold */}
+        <div className="mt-6">{ProofStrip}</div>
+
         <div className="mt-6 grid gap-4 lg:grid-cols-2">
-          {/* Add subtle interactivity by wrapping cards */}
           {EQUIPMENT_CATEGORIES.map((category) => (
             <div
               key={category.key}
