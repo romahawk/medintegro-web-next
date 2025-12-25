@@ -98,6 +98,12 @@ export default async function ProductPage({ params }: Props) {
                 <h2 className="text-base font-semibold">
                   {isUA ? "Типові сценарії застосування" : "Typical use cases"}
                 </h2>
+                <Button asChild variant="outline" size="sm">
+                    <Link href={`/${locale}/equipment/${categorySlug}/${line}/compare`}>
+                        {locale === "ua" ? "Порівняти системи" : "Compare systems"}
+                    </Link>
+                </Button>
+
                 <p className="mt-2 text-sm text-muted-foreground max-w-prose">
                   {isUA
                     ? "Використовується як частина інтегрованої системи з іншими джерелами, записом, маршрутизацією та IT-інфраструктурою."
