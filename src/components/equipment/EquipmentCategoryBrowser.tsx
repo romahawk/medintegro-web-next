@@ -51,12 +51,7 @@ export function EquipmentCategoryBrowser({ categories, locale }: Props) {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder={locale === "ua" ? "Пошук по категоріях…" : "Search categories…"}
-              className="
-                w-full sm:w-[360px]
-                rounded-xl border border-border/60 bg-background px-4 py-2 text-sm
-                outline-none transition
-                focus:ring-2 focus:ring-ring
-              "
+              className="w-full sm:w-90 rounded-xl border border-border/60 bg-background px-4 py-2 text-sm outline-none transition focus:ring-2 focus:ring-ring"
             />
             {query ? (
               <button

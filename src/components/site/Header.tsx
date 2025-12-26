@@ -88,7 +88,7 @@ export function Header({ locale }: { locale: Locale }) {
                   {/* underline */}
                   <span
                     className={cn(
-                      "absolute left-0 right-0 -bottom-[2px] h-[2px] rounded-full transition-opacity",
+                      "absolute left-0 right-0 -bottom-0.5 h-0.5 rounded-full transition-opacity",
                       active ? "bg-sky-600 opacity-100" : "opacity-0"
                     )}
                   />

@@ -51,7 +51,7 @@ export function BrandHero({
       </div>
 
       {/* Tech texture */}
-      <div className="pointer-events-none absolute inset-0 opacity-[0.16] [background-image:radial-gradient(rgba(255,255,255,0.70)_1px,transparent_1px)] [background-size:26px_26px]" />
+      <div className="pointer-events-none absolute inset-0 opacity-[0.16] bg-[radial-gradient(rgba(255,255,255,0.70)_1px,transparent_1px)] bg-size-[26px_26px]" />
 
       <div className={`relative ${isCompact ? "p-6 md:p-8" : "p-6 md:p-12"}`}>
         <div className={maxWidthClassName}>
