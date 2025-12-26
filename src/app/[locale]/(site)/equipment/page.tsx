@@ -11,15 +11,12 @@ import { ArrowRight, ShieldCheck } from "lucide-react";
 
 import type { Locale } from "@/lib/i18n/locales";
 import { EQUIPMENT_CATEGORIES } from "@/lib/equipment/data";
-import { EquipmentCategoryCard } from "@/components/equipment/EquipmentCategoryCard";
+
+import { EquipmentCategoryBrowser } from "@/components/equipment/EquipmentCategoryBrowser";
 
 type Props = {
   params: Promise<{ locale: Locale }>;
 };
-
-function cn(...classes: Array<string | false | null | undefined>) {
-  return classes.filter(Boolean).join(" ");
-}
 
 export default async function EquipmentPage({ params }: Props) {
   const { locale } = await params;
@@ -81,7 +78,6 @@ export default async function EquipmentPage({ params }: Props) {
     </div>
   );
 
-  // ✅ Neutral proof strip (works on light background, not “empty cards”)
   const ProofStripNeutral = (
     <div className="grid gap-4 md:grid-cols-3">
       {t.proof.map((p) => (
@@ -100,7 +96,7 @@ export default async function EquipmentPage({ params }: Props) {
 
   return (
     <>
-      {/* HERO (compact) */}
+      {/* HERO */}
       <Section spacing="hero">
         <BrandHero
           variant="compact"
@@ -111,9 +107,8 @@ export default async function EquipmentPage({ params }: Props) {
         />
       </Section>
 
-      {/* CATEGORIES GRID */}
+      {/* CATEGORIES */}
       <Section tone="muted">
-        {/* ✅ Pull categories up (above the fold) */}
         <div className="-mt-10 md:-mt-14">
           <div className="flex items-end justify-between gap-6">
             <div className="space-y-1">
@@ -130,22 +125,12 @@ export default async function EquipmentPage({ params }: Props) {
             <div className="hidden md:block h-px w-40 bg-linear-to-r from-transparent via-[rgb(var(--brand-sky-rgb))]/35 to-transparent" />
           </div>
 
-          {/* ✅ Categories FIRST (no proof blocks here) */}
-          <div className="mt-4 grid gap-4 lg:grid-cols-2">
-            {EQUIPMENT_CATEGORIES.map((category) => (
-              <div
-                key={category.key}
-                className={cn(
-                  "transition",
-                  "hover:-translate-y-0.5 hover:shadow-lg hover:shadow-black/5"
-                )}
-              >
-                <EquipmentCategoryCard category={category} locale={locale} />
-              </div>
-            ))}
+          {/* ✅ Interactive catalog row (Search + Filters + Grid) */}
+          <div className="mt-4">
+            <EquipmentCategoryBrowser categories={EQUIPMENT_CATEGORIES} locale={locale} />
           </div>
 
-          {/* IMPORTANT NOTE (styled card) */}
+          {/* IMPORTANT NOTE */}
           <Card className="mt-10 border-border/60 bg-background">
             <CardContent className="p-6">
               <div className="flex items-start gap-3">
@@ -176,7 +161,7 @@ export default async function EquipmentPage({ params }: Props) {
             </CardContent>
           </Card>
 
-          {/* ✅ Proof AFTER categories (neutral style, no “empty containers”) */}
+          {/* Proof AFTER catalog */}
           <div className="mt-10">{ProofStripNeutral}</div>
         </div>
       </Section>
@@ -190,14 +175,8 @@ export default async function EquipmentPage({ params }: Props) {
               ? "Опишіть відділення та контекст — ми запропонуємо структуру рішення та наступний крок."
               : "Describe the department and context — we’ll propose a solution structure and next step."
           }
-          primary={{
-            label: isUA ? "Зв’язатися" : "Contact",
-            href: `/${locale}/contact`,
-          }}
-          secondary={{
-            label: isUA ? "Послуги" : "Services",
-            href: `/${locale}/services`,
-          }}
+          primary={{ label: isUA ? "Зв’язатися" : "Contact", href: `/${locale}/contact` }}
+          secondary={{ label: isUA ? "Послуги" : "Services", href: `/${locale}/services` }}
         />
       </Section>
     </>
